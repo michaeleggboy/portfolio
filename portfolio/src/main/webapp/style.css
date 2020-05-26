@@ -1,9 +1,16 @@
 #content {
+  border: 15px solid DodgerBlue;
+  padding: 50px; 
   margin-left: auto;
   margin-right: auto;
   width: 650px;
 }
-
+ 
 #greeting-container {
   margin-top: 20px;
 }
+ 
+#quote-container {
+  margin-top: 20px;
+}
+

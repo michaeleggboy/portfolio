@@ -26,3 +26,22 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+/**
+ * Adds a random quote to the page.
+ */
+function addRandomQuote() {
+  const quotes =
+      ['Batman: (to Owlman) There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.', 
+      'Morpheus: There is a difference between knowing the path and walking the path.', 
+      'Chewbacca: WWWWWWWGGGGHHHRRRRW.', 
+      'Cobb: If you\'re going to perform inception, you need imagination.'];
+ 
+  // Pick a random quote.
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+ 
+  // Add it to the page.
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerText = quote;
+}
+
