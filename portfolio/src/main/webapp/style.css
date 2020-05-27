@@ -1,10 +1,13 @@
+/* The body of website */
 body{
     background: url("/images/cloud.webp") no-repeat center fixed;
     background-size: cover;
     margin: 0;
 }
 
+/* The header container */
 .header {
+  border-radius: 15px 15px 50px 15px;  
   background-color: skyblue;
   text-align: center;
   padding: 20px;
@@ -12,6 +15,7 @@ body{
 
 /* The navbar container */
 .topnav {
+  border-radius: 15px 15px 50px 15px;
   overflow: hidden;
   background-color:  steelblue;
 }
@@ -86,6 +90,7 @@ of next to each other */
   }
 }
 
+/* Social media buttons */
 .fa {
   padding: 20px;
   font-size: 30px;
@@ -95,35 +100,66 @@ of next to each other */
   margin: 5px 2px;
 }
 
+/* Social media buttons - change color on hover */
 .fa:hover {
     opacity: 0.7;
 }
 
+/* LinkedIn button */
 .fa-linkedin {
   background: url("/images/linkedin-brands.svg") no-repeat;
   color: white;
 }
 
+/* Instagram button */
 .fa-instagram {
   background: url("/images/instagram-brands.svg") no-repeat;
   color: white;
 }
 
+/* Github button */
 .fa-github {
   background: url("/images/github-brands.svg") no-repeat;
   color: white;
 }
 
+/* Thumbnail of art */
+.image-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Reize size of image thumbnail */
+.image-thumbnails img {
+  margin: 10px;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+/* Image thumbnail - changes color on hover */
+.image-thumbnails img:hover {
+  border: thick solid black;
+}
+
+/* Content takes up to 75% of width space */
 #content {
   margin-left: auto;
   margin-right: auto;
   width: 75%;
 }
- 
+
+/* Image thumbnail container */
+#random-image-container img {
+  margin-top: 20px;
+}
+
+/* Greeting container */
 #greeting-container {
   margin-top: 20px;
 }
 
+/* Quote container */
 #quote-container {  
   margin-top: 20px;
 }
