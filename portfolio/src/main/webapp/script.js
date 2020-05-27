@@ -26,3 +26,40 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+/**
+ * Adds a random quote to the page.
+ */
+function addRandomQuote() {
+  const quotes =
+      ['Batman: (to Owlman) There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.', 
+      'Morpheus: There is a difference between knowing the path and walking the path.', 
+      'Chewbacca: RRWWWGG.', 
+      'Cobb: If you\'re going to perform inception, you need imagination.'];
+ 
+  // Pick a random quote.
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+ 
+  // Add it to the page.
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerText = quote;
+}
+
+/**
+ * Generates a URL for a random image in the images directory and adds an img
+ * element with that URL to the page.
+ */
+function randomizeImage() {
+  // The images directory contains 13 images, so generate a random index between
+  // 1 and 13.
+  const imageIndex = Math.floor(Math.random() * 13) + 1;
+  const imgUrl = 'images/stanley-' + imageIndex + '.jpg';
+
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
+}
