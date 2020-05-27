@@ -34,7 +34,7 @@ function addRandomQuote() {
   const quotes =
       ['Batman: (to Owlman) There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.', 
       'Morpheus: There is a difference between knowing the path and walking the path.', 
-      'Chewbacca: WWWWWWWGGGGHHHRRRRW.', 
+      'Chewbacca: RRWWWGG.', 
       'Cobb: If you\'re going to perform inception, you need imagination.'];
  
   // Pick a random quote.
@@ -44,4 +44,3 @@ function addRandomQuote() {
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
-
