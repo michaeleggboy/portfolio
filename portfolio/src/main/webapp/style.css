@@ -160,6 +160,7 @@ of next to each other */
   max-width: 220px;
 }
 
+/* Input section of form */
 input[type=text], select, textarea {
   width: 100%;
   padding: 12px 20px;
@@ -170,6 +171,7 @@ input[type=text], select, textarea {
   box-sizing: border-box;
 }
 
+/* Submit button */
 input[type=submit] {
   width: 100%;
   background-color: Yellow;
@@ -183,8 +185,70 @@ input[type=submit] {
   cursor: pointer;
 }
 
+/* Submit button - changes color on hover */
 input[type=submit]:hover {
-  background-color: lightgoldenrodyellow;
+  background-color: rgb(255,255,153);
+}
+
+/* The radio button container */
+.rb_container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Hide the browser's default radio button */
+.rb_container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.rb_container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.rb_container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.rb_checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.rb_container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.rb_container .checkmark:after {
+ 	top: 4.725px;
+	left: 4.4px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
 }
 
 /* Content takes up to 75% of width space */
@@ -199,12 +263,7 @@ input[type=submit]:hover {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
-}
-
-/* Image thumbnail container */
-#random-image-container img {
-  margin-top: 20px;
-}
+}  
 
 /* Greeting container */
 #greeting-container {
