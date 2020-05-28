@@ -3,7 +3,26 @@ body{
     background: url("/images/cloud.webp") no-repeat center fixed;
     background-size: cover;
     margin: 0;
-    font-family:  "Press Start 2P";
+    font-family:  "Super Mario 256";
+}
+
+.m_blue{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(4, 156, 216);
+}
+
+.m_yellow{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(251, 208, 0);
+}
+
+.m_red{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(229, 37, 33);
+}
+.m_green{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(67, 176, 71);
 }
 
 /* Download Press Start 2P font */
@@ -16,6 +35,18 @@ body{
 .game_font{
     font-family: "Press Start 2P";
     src: url("/fonts/PressStart2P-Regular.ttf");
+}
+
+/* Download Super Mario 256 font */
+@font-face{
+    font-family: "Super Mario 256";
+    src: url("/fonts/SuperMario256.ttf");
+}
+
+/* Super Marion 256 font */
+.mario_font{
+    font-family: "Super Mario 256";
+    src: url("/fonts/SuperMario256.ttf");
 }
 
 /* The header container */
@@ -173,13 +204,11 @@ input[type=text], select, textarea {
 
 /* Submit button */
 input[type=submit] {
-  width: 100%;
-  background-color: Yellow;
+  background-color: rgb(251, 208, 0);
   color: black;
-  font-family: "Press Start 2P";
+  font-family: "Super Mario 256";
   font-size: 1vw;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -187,7 +216,7 @@ input[type=submit] {
 
 /* Submit button - changes color on hover */
 input[type=submit]:hover {
-  background-color: rgb(255,255,153);
+  background-color:rgb(245, 217, 77);
 }
 
 /* The radio button container */
