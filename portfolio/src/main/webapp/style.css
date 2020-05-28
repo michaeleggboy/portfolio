@@ -152,7 +152,7 @@ of next to each other */
   border-image: url("images/border.png") 30 round;
 }
 
-/* Image thumbnail - changes color on hover */
+/* Image thumbnail - changes color and size on hover */
 .image-thumbnails img:hover {
   opacity: 0.7;
   max-height: 220px;
@@ -166,6 +166,7 @@ of next to each other */
   width: 75%;
 }
 
+/* Content takes up to 650px of width space */
 #content2 {
   margin-left: auto;
   margin-right: auto;
