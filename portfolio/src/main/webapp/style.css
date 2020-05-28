@@ -209,7 +209,7 @@ input[type=submit]:hover {
 }
 
 /* Create a custom radio button */
-.checkmark {
+.rb_checkmark {
   position: absolute;
   top: 0;
   left: 0;
@@ -220,12 +220,12 @@ input[type=submit]:hover {
 }
 
 /* On mouse-over, add a grey background color */
-.rb_container:hover input ~ .checkmark {
+.rb_container:hover input ~ .rb_checkmark {
   background-color: #ccc;
 }
 
 /* When the radio button is checked, add a blue background */
-.rb_container input:checked ~ .checkmark {
+.rb_container input:checked ~ .rb_checkmark {
   background-color: #2196F3;
 }
 
@@ -237,12 +237,12 @@ input[type=submit]:hover {
 }
 
 /* Show the indicator (dot/circle) when checked */
-.rb_container input:checked ~ .checkmark:after {
+.rb_container input:checked ~ .rb_checkmark:after {
   display: block;
 }
 
 /* Style the indicator (dot/circle) */
-.rb_container .checkmark:after {
+.rb_container .rb_checkmark:after {
  	top: 4.725px;
 	left: 4.4px;
 	width: 8px;
