@@ -29,3 +29,26 @@ function addRandomQuote() {
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
+
+function getRandomQuote(){
+    console.log('Fetching a random quote..');
+
+    const requestPromise= fetch('/random-quote');
+
+    requestPromise.then(handleReponse);
+}
+
+function handleReponse(reponse){
+    console.log('Handling response..');
+
+    textPromise= reponse.text();
+
+    textPromise.then(addQuoteToDOM);
+}
+
+function addQuoteToDOM(quote){
+    console.log('Adding quote to DOM: ' + quote);
+
+    const quoteContainer= document.getElementById('quote-container');
+    quoteContainer.innerText= quote;
+}
