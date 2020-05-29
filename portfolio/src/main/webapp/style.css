@@ -296,3 +296,8 @@ input[type=submit]:hover {
 #quote-container {  
   margin-top: 20px;
 }
+
+/* Comment container */
+#comment-container {  
+  margin-top: 20px;
+}
