@@ -29,9 +29,11 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private List<Comment> comments;
+  private int i;
 
   public void init(){
       comments= new ArrayList<>();
+      i= 0;
 
       comments.add(new Comment("Mario", "2020-05-20", "Issa a-me, Mario!"));
       comments.add(new Comment("Princess Peach", "2020-05-22", "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
@@ -39,12 +41,14 @@ public class DataServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    for(int i= 0; i < comments.size(); i++){
-        String json= convertToJsonUsingGson(comments.get(i));
-        response.setContentType("application/json;");
-        response.getWriter().println(json);
-    }
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {   
+
+    if(i == 3)
+        i = 0;        
+    String json= convertToJsonUsingGson(comments.get(i));
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+    i++;
   }
 
   /**

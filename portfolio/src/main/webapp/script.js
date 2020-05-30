@@ -54,23 +54,24 @@ function addQuoteToDOM(quote){
 }   
 
 function getComments(){
-    fetch("/data").then(response => reponse.json()).then((comment) => {
-
-        const commentContainer= document.getElementById("comment-container");
-        commentContainer.innerText= " ";
+    fetch("/data").then(response => response.json()).then((comment) => {
+        
+        console.log(comment);
+        const commentContainer= document.getElementById('comment-container');
+        commentContainer.innerText= '';
         commentContainer.appendChild(createHeaderElement(comment.userID + ", " + comment.submitTime));
-        commentContainer.appendChild(createBodyElement(comment.comment));
+        commentContainer.appendChild(createParaElement(comment.comment));
     });
 }
 
-function createHeaderElement(text){
-    const h4Element= document.createElement('h4');
-    h4Element.innerText= text;
-    return h4Element;
+function createHeaderElement(text) {
+  const h4Element = document.createElement('h4');
+  h4Element.innerText = text;
+  return h4Element;
 }
 
-function createBodyElement(text){
-    const pElement= document.createElement('p');
-    pElement.innerText= text;
-    return pElement;  
+function createParaElement(text) {
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
 }
