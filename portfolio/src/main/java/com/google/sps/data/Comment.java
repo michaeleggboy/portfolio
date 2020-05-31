@@ -20,13 +20,8 @@ import java.util.Date;
 public final class Comment {
 
   private final String userID;  
-  private Date submitTime;  
-  private String comment;
-
-  public Comment(String userID, String comment){
-    this.userID = userID;
-    this.comment = comment;
-  }
+  private final Date submitTime;  
+  private final String comment;
 
   public Comment(String userID, Date submitTime, String comment) {
     this.userID = userID;
@@ -36,10 +31,6 @@ public final class Comment {
 
   public String getUserID() {
     return userID;
-  }
-
-  public void setSubmitTime(Date submitTime){
-      this.submitTime= submitTime;
   }
 
   public Date getSubmitTime() {
