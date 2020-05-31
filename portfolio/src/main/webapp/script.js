@@ -65,9 +65,9 @@ function getComments(){
 }
 
 function createHeaderElement(text) {
-  const h4Element = document.createElement('h4');
-  h4Element.innerText = text;
-  return h4Element;
+  const hElement = document.createElement('h2');
+  hElement.innerText = text;
+  return hElement;
 }
 
 function createParaElement(text) {

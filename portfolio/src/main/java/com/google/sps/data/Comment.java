@@ -14,14 +14,21 @@
 
 package com.google.sps.data;
 
+import java.util.Date;
+
 /** Class containing a comment. */
 public final class Comment {
 
-  private final String userID;
-  private final String submitTime;
-  private final String comment;
+  private final String userID;  
+  private Date submitTime;  
+  private String comment;
 
-  public Comment(String userID, String submitTime, String comment) {
+  public Comment(String userID, String comment){
+    this.userID = userID;
+    this.comment = comment;
+  }
+
+  public Comment(String userID, Date submitTime, String comment) {
     this.userID = userID;
     this.submitTime = submitTime;
     this.comment = comment;
@@ -31,7 +38,11 @@ public final class Comment {
     return userID;
   }
 
-  public String getSubmitTime() {
+  public void setSubmitTime(Date submitTime){
+      this.submitTime= submitTime;
+  }
+
+  public Date getSubmitTime() {
     return submitTime;
   }
 

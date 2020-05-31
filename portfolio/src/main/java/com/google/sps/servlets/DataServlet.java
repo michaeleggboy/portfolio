@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,16 +36,17 @@ public class DataServlet extends HttpServlet {
       comments= new ArrayList<>();
       i= 0;
 
-      comments.add(new Comment("Mario", "2020-05-20", "Issa a-me, Mario!"));
-      comments.add(new Comment("Princess Peach", "2020-05-22", "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
-      comments.add(new Comment("Luigi", "2020-05-22", "Lets-a go!"));  
+      comments.add(new Comment("Mario", "Issa a-me, Mario!"));
+      comments.add(new Comment("Princess Peach", "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
+      comments.add(new Comment("Luigi", "Lets-a go!"));  
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {   
 
-    if(i == 3)
+    if(i == comments.size())
         i = 0;        
+    comments.get(i).setSubmitTime(new Date());    
     String json= convertToJsonUsingGson(comments.get(i));
     response.setContentType("application/json;");
     response.getWriter().println(json);
