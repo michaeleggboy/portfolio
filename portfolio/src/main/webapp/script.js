@@ -53,7 +53,7 @@ function addQuoteToDOM(quote){
     quoteContainer.innerText= quote;
 }   
 
-function getComments(){
+function getFakeComments(){
     fetch("/data").then(response => response.json()).then((comment) => {
         
         console.log(comment);
@@ -62,6 +62,21 @@ function getComments(){
         commentContainer.appendChild(createHeaderElement(comment.userID + ", " + comment.submitTime));
         commentContainer.appendChild(createParaElement(comment.comment));
     });
+}
+
+function getAllComments() {
+  fetch('/comments').then(response => response.json()).then((comments) => {
+
+    const commentContainer = document.getElementById('comment-container');
+    commentContainer.innerText= '';    
+    console.log(comments);
+
+    comments.forEach((comment) => {
+        console.log(comment);  
+        commentContainer.appendChild(createHeaderElement(comment.userID + ", " + comment.submitTime));
+        commentContainer.appendChild(createParaElement(comment.comment));
+    });
+  });
 }
 
 function createHeaderElement(text) {
@@ -75,3 +90,5 @@ function createParaElement(text) {
   pElement.innerText = text;
   return pElement;
 }
+
+
