@@ -65,7 +65,7 @@ function getFakeComments(){
 }
 
 function getAllComments() {
-  fetch('/comments').then(response => response.json()).then((comments) => {
+  fetch('/display-comments').then(response => response.json()).then((comments) => {
 
     const commentContainer = document.getElementById('comment-container');
     commentContainer.innerText= '';    
