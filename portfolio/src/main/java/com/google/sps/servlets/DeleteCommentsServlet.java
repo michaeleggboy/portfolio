@@ -16,61 +16,34 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.gson.Gson;
-import com.google.sps.data.Comment;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/display-comments")
-public class DisplayCommentsServlet extends HttpServlet{
-
-    private int numComments;
-
-    public void init(){
-        numComments= 5;
-    }
+@WebServlet("/delete-comments")
+public class DeleteCommentsServlet extends HttpServlet{
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Query query= new Query("Comment").addSort("submitTime", SortDirection.DESCENDING);
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Query query= new Query("Comment");
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
-        List<Comment> comments= new ArrayList<>();
         for(Entity entity: results.asIterable()){
             long id = entity.getKey().getId();
-            String userID= (String) entity.getProperty("fName");
-            Date submitTime= (Date) entity.getProperty("submitTime");
-            String comment= (String) entity.getProperty("comment");
-
-            Comment newComment= new Comment(id, userID, submitTime, comment);
-            comments.add(newComment);
+            
+            Key taskEntityKey = KeyFactory.createKey("Comment", id);
+            datastore.delete(taskEntityKey);
         }
-
-        Gson gson = new Gson();
-
-        response.setContentType("application/json;");
-        if(comments.size() <= numComments){
-            response.getWriter().println(gson.toJson(comments));
-        }else{
-            response.getWriter().println(gson.toJson(comments.subList(0,numComments)));    
-        }
-    }
-
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        numComments= Integer.parseInt(request.getParameter("numComments"));
 
         response.sendRedirect("/comments.html");
     }

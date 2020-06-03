@@ -62,10 +62,12 @@ public class NewCommentServlet extends HttpServlet{
 
   private String checkGooglePoll(HttpServletRequest request){
       String value= request.getParameter("radio");
-      if(value.equals("yes"))
+      
+      if(value.equals("yes")){
         return "Yes";
-      else if(value.equals("no"))
+      }else if(value.equals("no")){
         return "No";
+      }  
       return "Rather Not Say";  
   }
 }

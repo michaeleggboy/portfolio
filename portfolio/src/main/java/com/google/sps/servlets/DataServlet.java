@@ -36,9 +36,9 @@ public class DataServlet extends HttpServlet {
       comments= new ArrayList<>();
       i= 0;
 
-      comments.add(new Comment("Mario", new Date(), "Issa a-me, Mario!"));
-      comments.add(new Comment("Princess Peach", new Date(), "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
-      comments.add(new Comment("Luigi", new Date(), "Lets-a go!"));  
+      comments.add(new Comment(1, "Mario", new Date(), "Issa a-me, Mario!"));
+      comments.add(new Comment(2, "Princess Peach", new Date(), "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
+      comments.add(new Comment(3, "Luigi", new Date(), "Lets-a go!"));  
   }
 
   @Override

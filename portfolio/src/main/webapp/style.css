@@ -195,6 +195,18 @@ input[type=text], select, textarea {
   box-sizing: border-box;
 }
 
+/* Number selection selection of form */
+input[type=number] {
+  color: black;
+  width: 15%;
+  font-family: "Super Mario 256";
+  font-size: 1vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* Submit button */
 input[type=submit] {
   background-color: rgb(251, 208, 0);
