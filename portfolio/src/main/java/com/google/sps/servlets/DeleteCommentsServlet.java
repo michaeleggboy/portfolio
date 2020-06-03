@@ -28,22 +28,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/delete-comments")
+@WebServlet("/delete-comment")
 public class DeleteCommentsServlet extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Query query= new Query("Comment");
+        long id= Long.parseLong(request.getParameter("id"));
 
+        Key commentEntityKey = KeyFactory.createKey("Comment", id);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(query);
-
-        for(Entity entity: results.asIterable()){
-            long id = entity.getKey().getId();
-            
-            Key taskEntityKey = KeyFactory.createKey("Comment", id);
-            datastore.delete(taskEntityKey);
-        }
+        datastore.delete(commentEntityKey);
 
         response.sendRedirect("/comments.html");
     }

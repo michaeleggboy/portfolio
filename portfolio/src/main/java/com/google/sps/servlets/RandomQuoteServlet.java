@@ -31,10 +31,11 @@ public class RandomQuoteServlet extends HttpServlet{
     public void init(){
         quotes = new ArrayList<>();
 
-        quotes.add("Batman: (to Owlman) There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.");
+        quotes.add("Batman: [to Owlman] There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.");
         quotes.add("Morpheus: There is a difference between knowing the path and walking the path.");
         quotes.add("Chewbacca: RRWWWGG.");
         quotes.add("Cobb: If you\'re going to perform inception, you need imagination.");
+        quotes.add("Harry Hart : [Quoting Ernest Hemingway] There is nothing noble in being superior to your fellow man; true nobility is being superior to your former self.");
     }
 
     @Override

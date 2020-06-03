@@ -224,6 +224,7 @@ input[type=submit]:hover {
   background-color:rgb(245, 217, 77);
 }
 
+/* Yellow button container */
 .button1{
   background-color: rgb(251, 208, 0);
   color: black;
@@ -235,8 +236,27 @@ input[type=submit]:hover {
   cursor: pointer;
 }
 
+/* Yellow button container - changes color on hover */
 .button1:hover{
   background-color:rgb(245, 217, 77);
+}
+
+/* Red button container */
+.button2{
+  background-color: rgb(229, 37, 33);
+  color: black;
+  font-family: "Super Mario 256";
+  font-size: 1vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 80%;
+}
+
+/* Red button container - changes color on hover */
+.button2:hover{
+  background-color:rgb(219, 70, 68);
 }
 
 /* The radio button container */
@@ -324,7 +344,7 @@ input[type=submit]:hover {
   margin-top: 20px;
 }
 
-/* Comment container */
-#comment-container {  
+/* Comments container */
+#comments-container {  
   margin-top: 20px;
 }

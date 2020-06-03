@@ -72,11 +72,35 @@ function getAllComments() {
     console.log(comments);
 
     comments.forEach((comment) => {
-        console.log(comment);  
-        commentContainer.appendChild(createHeaderElement(comment.userID + ", " + comment.submitTime));
-        commentContainer.appendChild(createParaElement(comment.comment));
+        commentContainer.appendChild(createCommentElement(comment))
     });
   });
+}
+
+function createCommentElement(comment){
+    console.log(comment); 
+
+    const commentElement= document.createElement('span');
+    commentElement.className= 'comment';
+
+    const headerElement= createHeaderElement(comment.userID + ", " + comment.submitTime);
+
+    const contentElement= createParaElement(comment.comment);
+
+    const deleteButtonElement = document.createElement('button');
+    deleteButtonElement.className= 'button2'
+    deleteButtonElement.innerText = 'Delete';
+    deleteButtonElement.addEventListener('click', () => {
+        deleteComment(comment);
+
+        // Remove the task from the DOM.
+        commentElement.remove();
+    });
+
+    commentElement.appendChild(headerElement);
+    commentElement.appendChild(contentElement);
+    commentElement.appendChild(deleteButtonElement);
+    return commentElement;
 }
 
 function createHeaderElement(text) {
@@ -91,4 +115,8 @@ function createParaElement(text) {
   return pElement;
 }
 
-
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
+}
