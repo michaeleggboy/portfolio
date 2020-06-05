@@ -36,6 +36,7 @@ public class RandomQuoteServlet extends HttpServlet{
         quotes.add("Chewbacca: RRWWWGG.");
         quotes.add("Cobb: If you\'re going to perform inception, you need imagination.");
         quotes.add("Harry Hart : [Quoting Ernest Hemingway] There is nothing noble in being superior to your fellow man; true nobility is being superior to your former self.");
+        quotes.add("Helen Parr (Elastigirl): Everyone is special, Dash.\n\nDash Parr: That's just another way of saying no one is.");
     }
 
     @Override

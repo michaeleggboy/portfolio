@@ -16,6 +16,8 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import java.util.Date;
@@ -29,11 +31,14 @@ public class NewCommentServlet extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse reponse) throws IOException{
+        UserService userService = UserServiceFactory.getUserService();
+
         String fName= getParameter(request, "firstname", "Anonymous");
         String lName= getParameter(request, "lastname", "");
         String gPoll= checkGooglePoll(request);
         Date submitTime= new Date();
         String comment= getParameter(request, "subject", "");
+        /* String userEmail= userService.getCurrentUser().getEmail(); */
 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("fName", fName);
@@ -41,6 +46,7 @@ public class NewCommentServlet extends HttpServlet{
         commentEntity.setProperty("gPoll", gPoll);
         commentEntity.setProperty("submitTime", submitTime);
         commentEntity.setProperty("comment", comment);
+        /* commentEntity.setProperty("email", userEmail); */
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
