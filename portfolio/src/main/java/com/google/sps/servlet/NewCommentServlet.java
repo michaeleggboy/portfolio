@@ -68,6 +68,11 @@ public class NewCommentServlet extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse reponse) throws IOException{
         UserService userService = UserServiceFactory.getUserService();
 
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect("/index.html");
+            return;
+        }
+
         String fName= getParameter(request, "firstname", "Anonymous");
         String lName= getParameter(request, "lastname", "");
         String gPoll= checkGooglePoll(request);
