@@ -61,7 +61,15 @@ function addQuoteToDOM(quote){
 
     const quoteContainer= document.getElementById('quote-container');
     quoteContainer.innerText= quote;
-}   
+} 
+
+function getForm() {
+  fetch('/new-comment').then(response => response.text()).then((form) => {
+
+    const cardContainer = document.getElementById('card');
+    cardContainer.innerHTML= form;   
+  });
+}
 
 function getFakeComments(){
     fetch("/data").then(response => response.json()).then((comment) => {

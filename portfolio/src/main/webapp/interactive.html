@@ -22,29 +22,8 @@
       <div class="card">
         <p id="comment-container"></p>
       </div>  
-    <div class="card">  
-      <form action="/new-comment" method="POST">
-        <label for="fname">First Name:</label>
-            <input type="text" name="firstname" placeholder="Your name..">
-        <label for="lname">Last Name:</label>
-            <input type="text" name="lastname" placeholder="Your last name..">
-        <label for="gpoll">Do You Work At Google:</label>
-        <label class="rb_container">Yes
-            <input type="radio" checked="checked" name="radio" value="yes">
-            <span class="rb_checkmark"></span>
-        </label>
-        <label class="rb_container">No
-            <input type="radio" name="radio" value="no">
-            <span class="rb_checkmark"></span>
-        </label>
-        <label class="rb_container">Rather Not Say
-            <input type="radio" name="radio" value="rather not say">
-            <span class="rb_checkmark"></span>
-        </label>
-        <label for="about">About You:</label>
-            <textarea id="subject" name="subject" placeholder="Tell me about you.." style="height:200px"></textarea>
-        <input type="submit" value="Submit">
-      </form>
+    <div class="card" id="card">  
+      <script> getForm() </script>
     </div> 
     </div> 
     <div class="footer">
