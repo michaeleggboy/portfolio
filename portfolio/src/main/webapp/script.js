@@ -12,22 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random quote to the page.
- */
-function addRandomQuote() {
-  const quotes =
-      ['Batman: (to Owlman) There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.', 
-      'Morpheus: There is a difference between knowing the path and walking the path.', 
-      'Chewbacca: RRWWWGG.', 
-      'Cobb: If you\'re going to perform inception, you need imagination.'];
- 
-  // Pick a random quote.
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
- 
-  // Add it to the page.
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
+function getLoginStatus(){
+    console.log("Fetching login status..");
+
+    fetch("/status").then(response => response.text()).then((status) => {
+
+        const loginContainer= document.getElementById('login-container');
+        loginContainer.innerText= status; 
+    });
+}
+
+function logInOrOut(){
+    location.replace("/login");
+}
+
+function onLoadII(){
+    getLoginStatus();
+}
+
+function onLoadI(){
+    getLoginStatus();
+    getFakeComments();
+}
+
+function onLoadC(){
+    getLoginStatus();
+    getAllComments();
 }
 
 function getRandomQuote(){
@@ -51,7 +61,15 @@ function addQuoteToDOM(quote){
 
     const quoteContainer= document.getElementById('quote-container');
     quoteContainer.innerText= quote;
-}   
+} 
+
+function getForm() {
+  fetch('/new-comment').then(response => response.text()).then((form) => {
+
+    const cardContainer = document.getElementById('card');
+    cardContainer.innerHTML= form;   
+  });
+}
 
 function getFakeComments(){
     fetch("/data").then(response => response.json()).then((comment) => {
@@ -69,7 +87,6 @@ function getAllComments() {
 
     const commentContainer = document.getElementById('comment-container');
     commentContainer.innerText= '';    
-    console.log(comments);
 
     comments.forEach((comment) => {
         commentContainer.appendChild(createCommentElement(comment))
@@ -78,7 +95,6 @@ function getAllComments() {
 }
 
 function createCommentElement(comment){
-    console.log(comment); 
 
     const commentElement= document.createElement('span');
     commentElement.className= 'comment';

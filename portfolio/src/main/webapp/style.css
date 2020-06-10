@@ -60,9 +60,7 @@ body{
 /* Navbar links */
 .topnav a {
   float: left;
-  display: block;
   color: #f2f2f2;
-  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
@@ -334,11 +332,6 @@ input[type=submit]:hover {
   width: 650px;
 }  
 
-/* Greeting container */
-#greeting-container {
-  margin-top: 20px;
-}
-
 /* Quote container */
 #quote-container {  
   margin-top: 20px;
@@ -347,4 +340,9 @@ input[type=submit]:hover {
 /* Comments container */
 #comments-container {  
   margin-top: 20px;
+}
+
+/* Login container */
+#login-container{
+    margin: 0px;
 }

@@ -7,15 +7,16 @@
     <link rel="icon" href="/images/mario.png" type="image/png" sizes="16x16">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="onLoadII()">
     <div class="header">
-      <h1 style="font-size:3vw;"> <span class="m_blue">S</span><span class="m_yellow">U</span><span class="m_red">P</span><span class="m_green">E</span><span class="m_yellow">R</span><span class="m_red"> M</span><span class="m_green">I</span><span class="m_yellow">K</span><span class="m_blue">E</span> </h1>
+      <h1 style="font-size:3vw;"> <span class="m_blue">S</span><span class="m_yellow">U</span><span class="m_red">P</span><span class="m_green">E</span><span class="m_yellow">R</span><span class="m_red"> M</span><span class="m_green">I</span><span class="m_yellow">K</span><span class="m_blue">E</span></h1>
     </div>
     <div class="topnav">
       <a href="index.html">Home</a>
       <a href="images.html">Art Gallery</a>
       <a href="interactive.html">Interactive</a>
       <a href="comments.html">About You</a>
+      <button class="button button1" onclick="logInOrOut()" style="float:right; margin-right:40px; margin-top:2px"><p id="login-container"></p></button>    
     </div>
       <div id="content2">
       <h1 style="text-align:center;">Art Gallery</h1>

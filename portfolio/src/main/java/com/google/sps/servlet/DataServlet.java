@@ -35,11 +35,13 @@ public class DataServlet extends HttpServlet {
   public void init(){
       comments= new ArrayList<>();
       i= 0;
-
-      comments.add(new Comment(1, "Mario", new Date(), "Issa a-me, Mario!"));
-      comments.add(new Comment(2, "Princess Peach", new Date(), "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
-      comments.add(new Comment(3, "Luigi", new Date(), "Lets-a go!"));  
-      comments.add(new Comment(4,  "Bowser", new Date(), "The courage beyond compare, the bravery beyond description, I praise this great hero, the superior fiend.. me."));
+      
+      comments.add(new Comment(0, "Mario", new Date(), "Issa a-me, Mario!"));
+      comments.add(new Comment(1, "Princess Peach", new Date(), "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
+      comments.add(new Comment(2, "Luigi", new Date(), "Lets-a go!"));  
+      comments.add(new Comment(3,  "Bowser", new Date(), "The courage beyond compare, the bravery beyond description, I praise this great hero, the superior fiend.. me."));
+      comments.add(new Comment(4, "Wario", new Date(), "Wario time!"));
+      comments.add(new Comment(5, "Toadette", new Date(), "This is a job for a brave and braided genius.. Toadette!"));
   }
 
   @Override
