@@ -3,6 +3,50 @@ body{
     background: url("/images/cloud.webp") no-repeat center fixed;
     background-size: cover;
     margin: 0;
+    font-family:  "Super Mario 256";
+}
+
+.m_blue{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(4, 156, 216);
+}
+
+.m_yellow{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(251, 208, 0);
+}
+
+.m_red{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(229, 37, 33);
+}
+.m_green{
+    -webkit-text-stroke: 3px black;
+	-webkit-text-fill-color: rgb(67, 176, 71);
+}
+
+/* Download Press Start 2P font */
+@font-face{
+    font-family: "Press Start 2P";
+    src: url("/fonts/PressStart2P-Regular.ttf");
+}
+
+/* Press Start 2P font */
+.game_font{
+    font-family: "Press Start 2P";
+    src: url("/fonts/PressStart2P-Regular.ttf");
+}
+
+/* Download Super Mario 256 font */
+@font-face{
+    font-family: "Super Mario 256";
+    src: url("/fonts/SuperMario256.ttf");
+}
+
+/* Super Marion 256 font */
+.mario_font{
+    font-family: "Super Mario 256";
+    src: url("/fonts/SuperMario256.ttf");
 }
 
 /* The header container */
@@ -65,6 +109,7 @@ body{
   background-color: skyblue;
   padding: 20px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Footer */
@@ -130,29 +175,124 @@ of next to each other */
   justify-content: center;
 }
 
-/* Reize size of image thumbnail */
+/* Reize size of image thumbnail and adds border */
 .image-thumbnails img {
   margin: 10px;
   max-height: 200px;
   max-width: 200px;
+  border: 10px solid transparent;
+  border-image: url("images/border.png") 30 round;
 }
 
-/* Image thumbnail - changes color on hover */
+/* Image thumbnail - changes color and size on hover */
 .image-thumbnails img:hover {
-  border: thick solid black;
+  opacity: 0.7;
+  max-height: 220px;
+  max-width: 220px;
+}
+
+/* Input section of form */
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Submit button */
+input[type=submit] {
+  background-color: rgb(251, 208, 0);
+  color: black;
+  font-family: "Super Mario 256";
+  font-size: 1vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Submit button - changes color on hover */
+input[type=submit]:hover {
+  background-color:rgb(245, 217, 77);
+}
+
+/* The radio button container */
+.rb_container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Hide the browser's default radio button */
+.rb_container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.rb_checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.rb_container:hover input ~ .rb_checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.rb_container input:checked ~ .rb_checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.rb_checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.rb_container input:checked ~ .rb_checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.rb_container .rb_checkmark:after {
+ 	top: 4.725px;
+	left: 4.4px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
 }
 
 /* Content takes up to 75% of width space */
-#content {
+#content1 {
   margin-left: auto;
   margin-right: auto;
   width: 75%;
 }
 
-/* Image thumbnail container */
-#random-image-container img {
-  margin-top: 20px;
-}
+/* Content takes up to 650px of width space */
+#content2 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+}  
 
 /* Greeting container */
 #greeting-container {

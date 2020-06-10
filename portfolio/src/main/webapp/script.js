@@ -13,21 +13,6 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
-/**
  * Adds a random quote to the page.
  */
 function addRandomQuote() {
@@ -43,23 +28,4 @@ function addRandomQuote() {
   // Add it to the page.
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
-}
-
-/**
- * Generates a URL for a random image in the images directory and adds an img
- * element with that URL to the page.
- */
-function randomizeImage() {
-  // The images directory contains 13 images, so generate a random index between
-  // 1 and 13.
-  const imageIndex = Math.floor(Math.random() * 13) + 1;
-  const imgUrl = 'images/stanley-' + imageIndex + '.jpg';
-
-  const imgElement = document.createElement('img');
-  imgElement.src = imgUrl;
-
-  const imageContainer = document.getElementById('random-image-container');
-  // Remove the previous image.
-  imageContainer.innerHTML = '';
-  imageContainer.appendChild(imgElement);
 }
