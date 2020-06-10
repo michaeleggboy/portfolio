@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Michael Egbueze's Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/images/mario.png" type="image/png" sizes="16x16">
+    <script src="script.js"></script>
+  </head>
+  <body onload="getAllComments()">
+    <div class="header">
+      <h1 style="font-size:3vw;"> <span class="m_blue">S</span><span class="m_yellow">U</span><span class="m_red">P</span><span class="m_green">E</span><span class="m_yellow">R</span><span class="m_red"> M</span><span class="m_green">I</span><span class="m_yellow">K</span><span class="m_blue">E</span> </h1>
+    </div>
+    <div class="topnav">
+      <a href="index.html">Home</a>
+      <a href="images.html">Art Gallery</a>
+      <a href="interactive.html">Interactive</a>
+      <a href="comments.html">About You</a>
+    </div>
+    <div id ="content2">
+      <div class="card">
+        <h1 style="text-align:center">About You</h1>
+        <p id="comment-container"></p>
+        <form action="/display-comments" method="POST">
+          <input type="number" name="numComments" min="1" value="5">
+          <br/><br/>
+        <input type="submit" value="Display # of Comments"/>
+      </div>
+    </div>
+    <div class="footer">
+      <h3>@ Google STEP Portfolio by Michael Egbueze</h3>
+    </div>
+  </body>
+</html>  

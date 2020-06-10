@@ -29,3 +29,94 @@ function addRandomQuote() {
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
+
+function getRandomQuote(){
+    console.log('Fetching a random quote..');
+
+    const requestPromise= fetch('/random-quote');
+
+    requestPromise.then(handleReponse);
+}
+
+function handleReponse(reponse){
+    console.log('Handling response..');
+
+    textPromise= reponse.text();
+
+    textPromise.then(addQuoteToDOM);
+}
+
+function addQuoteToDOM(quote){
+    console.log('Adding quote to DOM: ' + quote);
+
+    const quoteContainer= document.getElementById('quote-container');
+    quoteContainer.innerText= quote;
+}   
+
+function getFakeComments(){
+    fetch("/data").then(response => response.json()).then((comment) => {
+        
+        console.log(comment);
+        const commentContainer= document.getElementById('comment-container');
+        commentContainer.innerText= '';
+        commentContainer.appendChild(createHeaderElement(comment.userID + ", " + comment.submitTime));
+        commentContainer.appendChild(createParaElement(comment.comment));
+    });
+}
+
+function getAllComments() {
+  fetch('/display-comments').then(response => response.json()).then((comments) => {
+
+    const commentContainer = document.getElementById('comment-container');
+    commentContainer.innerText= '';    
+    console.log(comments);
+
+    comments.forEach((comment) => {
+        commentContainer.appendChild(createCommentElement(comment))
+    });
+  });
+}
+
+function createCommentElement(comment){
+    console.log(comment); 
+
+    const commentElement= document.createElement('span');
+    commentElement.className= 'comment';
+
+    const headerElement= createHeaderElement(comment.userID + ", " + comment.submitTime);
+
+    const contentElement= createParaElement(comment.comment);
+
+    const deleteButtonElement = document.createElement('button');
+    deleteButtonElement.className= 'button2'
+    deleteButtonElement.innerText = 'Delete';
+    deleteButtonElement.addEventListener('click', () => {
+        deleteComment(comment);
+
+        // Remove the task from the DOM.
+        commentElement.remove();
+    });
+
+    commentElement.appendChild(headerElement);
+    commentElement.appendChild(contentElement);
+    commentElement.appendChild(deleteButtonElement);
+    return commentElement;
+}
+
+function createHeaderElement(text) {
+  const hElement = document.createElement('h2');
+  hElement.innerText = text;
+  return hElement;
+}
+
+function createParaElement(text) {
+  const pElement = document.createElement('p');
+  pElement.innerText = text;
+  return pElement;
+}
+
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
+}
