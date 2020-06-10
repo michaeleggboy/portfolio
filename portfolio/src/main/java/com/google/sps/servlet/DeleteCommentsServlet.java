@@ -28,9 +28,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/* Server that deletes comments */
 @WebServlet("/delete-comment")
 public class DeleteCommentsServlet extends HttpServlet{
 
+    /* deletes comment based off key id */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         long id= Long.parseLong(request.getParameter("id"));

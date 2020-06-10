@@ -22,9 +22,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/* Server handles logging in or out */ 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
+  
+  /* Checks user login status and correspondingly redirects user */ 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/* Serves returns a random movie quote */
 @WebServlet("/random-quote")
 public class RandomQuoteServlet extends HttpServlet{
 
@@ -39,6 +40,7 @@ public class RandomQuoteServlet extends HttpServlet{
         quotes.add("Helen Parr (Elastigirl): Everyone is special, Dash.\n\nDash Parr: That's just another way of saying no one is.");
     }
 
+    /* Returns a random movie quote */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String quote = quotes.get((int) (Math.random() * quotes.size()));
