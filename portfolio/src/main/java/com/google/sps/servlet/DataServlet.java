@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns fake Comments. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -35,13 +35,16 @@ public class DataServlet extends HttpServlet {
   public void init(){
       comments= new ArrayList<>();
       i= 0;
-
-      comments.add(new Comment(1, "Mario", new Date(), "Issa a-me, Mario!"));
-      comments.add(new Comment(2, "Princess Peach", new Date(), "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
-      comments.add(new Comment(3, "Luigi", new Date(), "Lets-a go!"));  
-      comments.add(new Comment(4,  "Bowser", new Date(), "The courage beyond compare, the bravery beyond description, I praise this great hero, the superior fiend.. me."));
+      
+      comments.add(new Comment(0, "Mario", new Date(), "Issa a-me, Mario!"));
+      comments.add(new Comment(1, "Princess Peach", new Date(), "Thank you! Peace has at last returned to our fair Mushroom Kingdom."));
+      comments.add(new Comment(2, "Luigi", new Date(), "Lets-a go!"));  
+      comments.add(new Comment(3,  "Bowser", new Date(), "The courage beyond compare, the bravery beyond description, I praise this great hero, the superior fiend.. me."));
+      comments.add(new Comment(4, "Wario", new Date(), "Wario time!"));
+      comments.add(new Comment(5, "Toadette", new Date(), "This is a job for a brave and braided genius.. Toadette!"));
   }
 
+  /* Cycls through array of fake comments and returns one */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {   
 
@@ -54,8 +57,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
-   * the Gson library dependency to pom.xml.
+   * Converts a Comment instance into a JSON string using the Gson library. 
    */
   private String convertToJsonUsingGson(Comment comment) {
     Gson gson = new Gson();

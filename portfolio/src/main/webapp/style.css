@@ -60,9 +60,7 @@ body{
 /* Navbar links */
 .topnav a {
   float: left;
-  display: block;
   color: #f2f2f2;
-  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
@@ -225,7 +223,7 @@ input[type=submit]:hover {
 }
 
 /* Yellow button container */
-.button1{
+.y_button{
   background-color: rgb(251, 208, 0);
   color: black;
   font-family: "Super Mario 256";
@@ -237,12 +235,12 @@ input[type=submit]:hover {
 }
 
 /* Yellow button container - changes color on hover */
-.button1:hover{
+.y_button:hover{
   background-color:rgb(245, 217, 77);
 }
 
 /* Red button container */
-.button2{
+.r_button{
   background-color: rgb(229, 37, 33);
   color: black;
   font-family: "Super Mario 256";
@@ -255,7 +253,7 @@ input[type=submit]:hover {
 }
 
 /* Red button container - changes color on hover */
-.button2:hover{
+.r_button:hover{
   background-color:rgb(219, 70, 68);
 }
 
@@ -321,23 +319,18 @@ input[type=submit]:hover {
 }
 
 /* Content takes up to 75% of width space */
-#content1 {
+#content_75w {
   margin-left: auto;
   margin-right: auto;
   width: 75%;
 }
 
 /* Content takes up to 650px of width space */
-#content2 {
+#content_650px {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
 }  
-
-/* Greeting container */
-#greeting-container {
-  margin-top: 20px;
-}
 
 /* Quote container */
 #quote-container {  
@@ -347,4 +340,9 @@ input[type=submit]:hover {
 /* Comments container */
 #comments-container {  
   margin-top: 20px;
+}
+
+/* Login container */
+#login-container{
+    margin: 0px;
 }

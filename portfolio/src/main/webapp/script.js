@@ -12,51 +12,71 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random quote to the page.
- */
-function addRandomQuote() {
-  const quotes =
-      ['Batman: (to Owlman) There is a difference between you and me. We both looked into the abyss, but when it looked back at us, you blinked.', 
-      'Morpheus: There is a difference between knowing the path and walking the path.', 
-      'Chewbacca: RRWWWGG.', 
-      'Cobb: If you\'re going to perform inception, you need imagination.'];
- 
-  // Pick a random quote.
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
- 
-  // Add it to the page.
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
+
+/* Fetches login status, updating login/logout button */
+function getLoginStatus(){
+    fetch("/status").then(response => response.text()).then((status) => {
+
+        const loginContainer= document.getElementById('login-container');
+        loginContainer.innerText= status; 
+    });
 }
 
-function getRandomQuote(){
-    console.log('Fetching a random quote..');
+/* Allows user to login/logout */
+function logInOrOut(){
+    location.replace("/login");
+}
 
+/* On load functions for index and images html pages */
+function onLoadIndexImagesPage(){
+    getLoginStatus();
+}
+
+/* On load functions for interactive html page */
+function onLoadInteractivePage(){
+    getLoginStatus();
+    getFakeComments();
+}
+
+/* On load functions for comments html page */
+function onLoadCommentsPage(){
+    getLoginStatus();
+    getComments();
+}
+
+/* Fetches random quote */
+function getRandomQuote(){
     const requestPromise= fetch('/random-quote');
 
     requestPromise.then(handleReponse);
 }
 
+/* Handles the text promise */
 function handleReponse(reponse){
-    console.log('Handling response..');
-
     textPromise= reponse.text();
 
     textPromise.then(addQuoteToDOM);
 }
 
+/* Adds the random quote to the DOM */
 function addQuoteToDOM(quote){
-    console.log('Adding quote to DOM: ' + quote);
-
     const quoteContainer= document.getElementById('quote-container');
     quoteContainer.innerText= quote;
-}   
+} 
 
+/* Fetches form html and adds it to DOM */
+function getForm() {
+  fetch('/new-comment').then(response => response.text()).then((form) => {
+
+    const cardContainer = document.getElementById('card');
+    cardContainer.innerHTML= form;   
+  });
+}
+
+/* Fetches fake comments and adds them to DOM */
 function getFakeComments(){
     fetch("/data").then(response => response.json()).then((comment) => {
         
-        console.log(comment);
         const commentContainer= document.getElementById('comment-container');
         commentContainer.innerText= '';
         commentContainer.appendChild(createHeaderElement(comment.userID + ", " + comment.submitTime));
@@ -64,12 +84,12 @@ function getFakeComments(){
     });
 }
 
-function getAllComments() {
+/* Fetches comments and adds them to DOM */
+function getComments() {
   fetch('/display-comments').then(response => response.json()).then((comments) => {
 
     const commentContainer = document.getElementById('comment-container');
     commentContainer.innerText= '';    
-    console.log(comments);
 
     comments.forEach((comment) => {
         commentContainer.appendChild(createCommentElement(comment))
@@ -77,8 +97,8 @@ function getAllComments() {
   });
 }
 
+/* Creates the comment element with delete button */
 function createCommentElement(comment){
-    console.log(comment); 
 
     const commentElement= document.createElement('span');
     commentElement.className= 'comment';
@@ -88,12 +108,11 @@ function createCommentElement(comment){
     const contentElement= createParaElement(comment.comment);
 
     const deleteButtonElement = document.createElement('button');
-    deleteButtonElement.className= 'button2'
+    deleteButtonElement.className= 'r_button'
     deleteButtonElement.innerText = 'Delete';
     deleteButtonElement.addEventListener('click', () => {
         deleteComment(comment);
 
-        // Remove the task from the DOM.
         commentElement.remove();
     });
 
@@ -103,18 +122,21 @@ function createCommentElement(comment){
     return commentElement;
 }
 
+/* Creates header part of comment object */
 function createHeaderElement(text) {
   const hElement = document.createElement('h2');
   hElement.innerText = text;
   return hElement;
 }
 
+/* Creates comment part of comment object */
 function createParaElement(text) {
   const pElement = document.createElement('p');
   pElement.innerText = text;
   return pElement;
 }
 
+/* Sends POST request to delete comments */
 function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
