@@ -19,6 +19,9 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import java.io.IOException;
 import java.util.Date;
 import java.io.PrintWriter;
@@ -27,9 +30,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/* Serves return form html based off login status */
 @WebServlet("/new-comment")
 public class NewCommentServlet extends HttpServlet{
 
+    /*Checks user login status and display corresponding form html */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         response.setContentType("text/html");
@@ -64,9 +69,10 @@ public class NewCommentServlet extends HttpServlet{
         }
     }
 
+    /* Creates comment enitiy upon submission of interactive form */
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse reponse) throws IOException{
-        UserService userService = UserServiceFactory.getUserService();
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        UserService userService= UserServiceFactory.getUserService();
 
         if (!userService.isUserLoggedIn()) {
             response.sendRedirect("/index.html");
@@ -78,7 +84,13 @@ public class NewCommentServlet extends HttpServlet{
         String gPoll= checkGooglePoll(request);
         Date submitTime= new Date();
         String comment= getParameter(request, "subject", "");
-        /* String userEmail= userService.getCurrentUser().getEmail(); */
+        String userEmail= userService.getCurrentUser().getEmail();
+
+        /* Document doc= Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
+        LanguageServiceClient languageService= LanguageServiceClient.create();
+        Sentiment sentiment= languageService.analyzeSentiment(doc).getDocumentSentiment();
+        float score= sentiment.getScore();
+        languageService.close(); */
 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("fName", fName);
@@ -86,12 +98,13 @@ public class NewCommentServlet extends HttpServlet{
         commentEntity.setProperty("gPoll", gPoll);
         commentEntity.setProperty("submitTime", submitTime);
         commentEntity.setProperty("comment", comment);
-        /* commentEntity.setProperty("email", userEmail); */
+        commentEntity.setProperty("email", userEmail);
+        /* commentEntity.setProperty("score", score); */
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
+        datastore.put(commentEntity); 
 
-        reponse.sendRedirect("/comments.html");
+        response.sendRedirect("/comments.html");
     }
 
   /**
@@ -106,6 +119,7 @@ public class NewCommentServlet extends HttpServlet{
     return value;
   }
 
+  /* Checks google poll reponse and returns string value */
   private String checkGooglePoll(HttpServletRequest request){
       String value= request.getParameter("radio");
       

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns fake Comments. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -44,6 +44,7 @@ public class DataServlet extends HttpServlet {
       comments.add(new Comment(5, "Toadette", new Date(), "This is a job for a brave and braided genius.. Toadette!"));
   }
 
+  /* Cycls through array of fake comments and returns one */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {   
 
@@ -56,8 +57,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
-   * the Gson library dependency to pom.xml.
+   * Converts a Comment instance into a JSON string using the Gson library. 
    */
   private String convertToJsonUsingGson(Comment comment) {
     Gson gson = new Gson();

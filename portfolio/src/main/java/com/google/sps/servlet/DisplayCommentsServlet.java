@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/* Return a designed number of comments */
 @WebServlet("/display-comments")
 public class DisplayCommentsServlet extends HttpServlet{
 
@@ -40,6 +41,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         numComments= 5;
     }
 
+    /* Queries comments before return comments are limited */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Query query= new Query("Comment").addSort("submitTime", SortDirection.DESCENDING);
@@ -68,6 +70,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         }
     }
 
+    /* Changes comment display amount to destinted valaue */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         numComments= Integer.parseInt(request.getParameter("numComments"));
