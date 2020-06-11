@@ -6,35 +6,28 @@ body{
     font-family:  "Super Mario 256";
 }
 
+/* Super Mario blue color */
 .m_blue{
     -webkit-text-stroke: 3px black;
 	-webkit-text-fill-color: rgb(4, 156, 216);
 }
 
+/* Super Mario yellow color */
 .m_yellow{
     -webkit-text-stroke: 3px black;
 	-webkit-text-fill-color: rgb(251, 208, 0);
 }
 
+/* Super Mario red color */
 .m_red{
     -webkit-text-stroke: 3px black;
 	-webkit-text-fill-color: rgb(229, 37, 33);
 }
+
+/* Super Mario green color */
 .m_green{
     -webkit-text-stroke: 3px black;
 	-webkit-text-fill-color: rgb(67, 176, 71);
-}
-
-/* Download Press Start 2P font */
-@font-face{
-    font-family: "Press Start 2P";
-    src: url("/fonts/PressStart2P-Regular.ttf");
-}
-
-/* Press Start 2P font */
-.game_font{
-    font-family: "Press Start 2P";
-    src: url("/fonts/PressStart2P-Regular.ttf");
 }
 
 /* Download Super Mario 256 font */
@@ -202,6 +195,18 @@ input[type=text], select, textarea {
   box-sizing: border-box;
 }
 
+/* Number selection selection of form */
+input[type=number] {
+  color: black;
+  width: 15%;
+  font-family: "Super Mario 256";
+  font-size: 1vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* Submit button */
 input[type=submit] {
   background-color: rgb(251, 208, 0);
@@ -217,6 +222,41 @@ input[type=submit] {
 /* Submit button - changes color on hover */
 input[type=submit]:hover {
   background-color:rgb(245, 217, 77);
+}
+
+/* Yellow button container */
+.button1{
+  background-color: rgb(251, 208, 0);
+  color: black;
+  font-family: "Super Mario 256";
+  font-size: 1vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Yellow button container - changes color on hover */
+.button1:hover{
+  background-color:rgb(245, 217, 77);
+}
+
+/* Red button container */
+.button2{
+  background-color: rgb(229, 37, 33);
+  color: black;
+  font-family: "Super Mario 256";
+  font-size: 1vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 80%;
+}
+
+/* Red button container - changes color on hover */
+.button2:hover{
+  background-color:rgb(219, 70, 68);
 }
 
 /* The radio button container */
@@ -301,5 +341,10 @@ input[type=submit]:hover {
 
 /* Quote container */
 #quote-container {  
+  margin-top: 20px;
+}
+
+/* Comments container */
+#comments-container {  
   margin-top: 20px;
 }
