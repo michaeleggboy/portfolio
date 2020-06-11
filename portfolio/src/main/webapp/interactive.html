@@ -7,43 +7,23 @@
     <link rel="icon" href="/images/mario.png" type="image/png" sizes="16x16">
     <script src="script.js"></script>
   </head>
-  <body onload="getFakeComments()">
+  <body onload="onLoadInteractivePage()">
     <div class="header">
-      <h1 style="font-size:3vw;"> <span class="m_blue">S</span><span class="m_yellow">U</span><span class="m_red">P</span><span class="m_green">E</span><span class="m_yellow">R</span><span class="m_red"> M</span><span class="m_green">I</span><span class="m_yellow">K</span><span class="m_blue">E</span> </h1>
+      <h1 style="font-size:3vw;"><span class="m_blue">S</span><span class="m_yellow">U</span><span class="m_red">P</span><span class="m_green">E</span><span class="m_yellow">R</span><span class="m_red"> M</span><span class="m_green">I</span><span class="m_yellow">K</span><span class="m_blue">E</span></h1>
     </div>
     <div class="topnav">
       <a href="index.html">Home</a>
       <a href="images.html">Art Gallery</a>
       <a href="interactive.html">Interactive</a>
       <a href="comments.html">About You</a>
+      <button class="button y_button" onclick="logInOrOut()" style="float:right; margin-right:40px; margin-top:2px"><p id="login-container"></p></button>
     </div>
-    <div id ="content2">
+    <div id ="content_650px">
       <div class="card">
         <p id="comment-container"></p>
       </div>  
-    <div class="card">  
-      <form action="/new-comment" method="POST">
-        <label for="fname">First Name:</label>
-            <input type="text" name="firstname" placeholder="Your name..">
-        <label for="lname">Last Name:</label>
-            <input type="text" name="lastname" placeholder="Your last name..">
-        <label for="gpoll">Do You Work At Google:</label>
-        <label class="rb_container">Yes
-            <input type="radio" checked="checked" name="radio" value="yes">
-            <span class="rb_checkmark"></span>
-        </label>
-        <label class="rb_container">No
-            <input type="radio" name="radio" value="no">
-            <span class="rb_checkmark"></span>
-        </label>
-        <label class="rb_container">Rather Not Say
-            <input type="radio" name="radio" value="rather not say">
-            <span class="rb_checkmark"></span>
-        </label>
-        <label for="about">About You:</label>
-            <textarea id="subject" name="subject" placeholder="Tell me about you.." style="height:200px"></textarea>
-        <input type="submit" value="Submit">
-      </form>
+    <div class="card" id="card">  
+      <script> getForm() </script>
     </div> 
     </div> 
     <div class="footer">
