@@ -44,7 +44,7 @@ public class DataServlet extends HttpServlet {
       comments.add(new Comment(5, "Toadette", new Date(), "This is a job for a brave and braided genius.. Toadette!"));
   }
 
-  /* Cycls through array of fake comments and returns one */
+  /* Cycles through array of fake comments and returns one */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {   
 
