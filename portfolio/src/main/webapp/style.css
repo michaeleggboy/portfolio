@@ -107,7 +107,11 @@ body{
 .footer {
   background-color: white;
   text-align: center;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: absolute;
+  bottom: -18px;
+  width: 100%;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead 
@@ -345,4 +349,13 @@ input[type=submit]:hover {
 /* Login container */
 #login-container{
     margin: 0px;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 7.5rem; 
 }
