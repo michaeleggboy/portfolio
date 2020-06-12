@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -50,7 +51,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         PreparedQuery results = datastore.prepare(query);
 
         List<Comment> comments= new ArrayList<>();
-        for(Entity entity: results.asIterable()){
+        for(Entity entity: results.asList(FetchOptions.Builder.withLimit(numComments))){
             long id = entity.getKey().getId();
             String userID= (String) entity.getProperty("fName");
             Date submitTime= (Date) entity.getProperty("submitTime");
@@ -63,11 +64,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         Gson gson = new Gson();
 
         response.setContentType("application/json;");
-        if(comments.size() <= numComments){
-            response.getWriter().println(gson.toJson(comments));
-        }else{
-            response.getWriter().println(gson.toJson(comments.subList(0,numComments)));    
-        }
+        response.getWriter().println(gson.toJson(comments));
     }
 
     /* Changes comment display amount to destinted valaue */
