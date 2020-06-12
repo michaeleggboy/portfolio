@@ -112,6 +112,8 @@ public class NewCommentServlet extends HttpServlet{
         response.sendRedirect("/comments.html");
     }
 
+    /* Formats the list of entities into a string, so it can be accpeted as data storage 
+       enitity property */ 
     private String formatEntityList(List<com.google.cloud.language.v1.Entity> entities){
         String stringEntity= "";
 
