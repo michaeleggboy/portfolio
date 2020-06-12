@@ -42,7 +42,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         numComments= 5;
     }
 
-    /* Queries comments before return comments are limited */
+    /* Limits the maximum of return comments returned in single batch */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Query query= new Query("Comment").addSort("submitTime", SortDirection.DESCENDING);
@@ -67,7 +67,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         response.getWriter().println(gson.toJson(comments));
     }
 
-    /* Changes comment display amount to destinted valaue */
+    /* Changes query cap to user determined value */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         numComments= Integer.parseInt(request.getParameter("numComments"));
