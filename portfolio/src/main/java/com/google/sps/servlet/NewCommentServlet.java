@@ -22,7 +22,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
+import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Date;
 import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
@@ -86,11 +88,13 @@ public class NewCommentServlet extends HttpServlet{
         String comment= getParameter(request, "subject", "");
         String userEmail= userService.getCurrentUser().getEmail();
 
-        /* Document doc= Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
+        Document doc= Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
         LanguageServiceClient languageService= LanguageServiceClient.create();
         Sentiment sentiment= languageService.analyzeSentiment(doc).getDocumentSentiment();
-        float score= sentiment.getScore();
-        languageService.close(); */
+        float score= sentiment.getScore(); 
+        AnalyzeEntitiesRequest entityRequest= AnalyzeEntitiesRequest.newBuilder().setDocument(doc).build();
+        List<com.google.cloud.language.v1.Entity> entities= languageService.analyzeEntities(entityRequest).getEntitiesList();
+        languageService.close(); 
 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("fName", fName);
@@ -99,12 +103,23 @@ public class NewCommentServlet extends HttpServlet{
         commentEntity.setProperty("submitTime", submitTime);
         commentEntity.setProperty("comment", comment);
         commentEntity.setProperty("email", userEmail);
-        /* commentEntity.setProperty("score", score); */
+        commentEntity.setProperty("score", score);
+        commentEntity.setProperty("entities", formatEntityList(entities));
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity); 
 
         response.sendRedirect("/comments.html");
+    }
+
+    private String formatEntityList(List<com.google.cloud.language.v1.Entity> entities){
+        String stringEntity= "";
+
+        for(com.google.cloud.language.v1.Entity en: entities){
+            stringEntity+= "[" + en + "]";     
+        }
+
+        return stringEntity;
     }
 
   /**
