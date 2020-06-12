@@ -42,7 +42,7 @@ public class DisplayCommentsServlet extends HttpServlet{
         numComments= 5;
     }
 
-    /* Limits the maximum of return comments returned in single batch */
+    /* Limits the maximum # of comments returned in single batch */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Query query= new Query("Comment").addSort("submitTime", SortDirection.DESCENDING);
