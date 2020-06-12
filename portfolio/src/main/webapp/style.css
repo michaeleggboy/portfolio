@@ -351,11 +351,13 @@ input[type=submit]:hover {
     margin: 0px;
 }
 
+/* Page container */
 #page-container {
   position: relative;
   min-height: 100vh;
 }
 
+/* Content wrapper */
 #content-wrap {
   padding-bottom: 7.5rem; 
 }
