@@ -15,7 +15,6 @@
 package com.google.sps;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -41,7 +40,6 @@ public final class FindMeetingQuery {
     ArrayList<Event> mandatorySchedule;
     if(mandatoryAttendees.size() == 0){
         mandatorySchedule= schedule;
-
     }else{
         mandatorySchedule= seperateMandatorySchedule(schedule, mandatoryAttendees);
     }
