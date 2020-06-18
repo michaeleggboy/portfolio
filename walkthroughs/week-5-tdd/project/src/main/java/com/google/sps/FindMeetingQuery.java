@@ -45,7 +45,7 @@ public final class FindMeetingQuery {
     ArrayList<TimeRange> query= getNotBusy(busy, duration);
 
     // if there is potential to invite all optional attendees too, check and return that contrained
-    // query
+    // query instead
     return query.size() > 1 && optionalSchedule != null ? getOptionalQuery(query, optionalSchedule) : query;
   }
 
@@ -114,7 +114,8 @@ public final class FindMeetingQuery {
     return busy;
   }
   
-  // Inverses the array of 'busy' time ranges and return time ranges that mandatory attendees can attend //
+  // Inverses the array of 'busy' time ranges and return time ranges that mandatory attendees can attend
+  // that meet duration request
   private ArrayList<TimeRange> getNotBusy(ArrayList<TimeRange> busy, long duration){
       ArrayList<TimeRange> notBusy= new ArrayList<>();
 
