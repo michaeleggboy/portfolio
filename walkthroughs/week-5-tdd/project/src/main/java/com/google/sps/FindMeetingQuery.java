@@ -14,11 +14,10 @@
 
 package com.google.sps;
 
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
 
 public final class FindMeetingQuery { 
   
@@ -26,62 +25,65 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
 
     // if requested duration is more than a day then there are no options for meeting times
-    if(request.getDuration() == TimeRange.WHOLE_DAY.duration() + 1){
-        Collection<TimeRange> query= new ArrayList<>();
+    long duration = request.getDuration();
+
+    if(duration == TimeRange.WHOLE_DAY.duration() + 1){
+        Collection<TimeRange> query = new ArrayList<>();
         return query;
     }
 
-    ArrayList<Event> schedule= new ArrayList<>(events);
-    
-    HashSet<String> mandatoryAttendees= new HashSet<>(request.getAttendees());
-    HashSet<String> optionalAttendees= new HashSet<>(request.getOptionalAttendees());
+    Collection<String> attendees = request.getAttendees();
+    Collection<String> optionalAttendees = request.getOptionalAttendees();
 
     // if there are no mandatory attendees then optional attendees can be treated as mandatory 
-    ArrayList<Event> mandatorySchedule;
-    if(mandatoryAttendees.size() == 0){
-        mandatorySchedule= schedule;
-    }else{
-        mandatorySchedule= seperateMandatorySchedule(schedule, mandatoryAttendees);
-    }
-    ArrayList<Event> optionalSchedule= schedule;
+    ArrayList<Event> mandatorySchedule = attendees.size() == 0 ? getOptionalSchedule(events, optionalAttendees) : 
+        getMandatorySchedule(events, attendees);
+    ArrayList<Event> optionalSchedule = attendees.size() == 0 || optionalAttendees.size() == 0 
+        ? null : getOptionalSchedule(events, optionalAttendees);
 
-    ArrayList<TimeRange> busy= busy(mandatorySchedule);
-    ArrayList<TimeRange> notBusy= notBusy(busy);
-    ArrayList<TimeRange> query= checkDuration(notBusy, request.getDuration());
-    if(query.size() > 1 && optionalAttendees.size() > 0 && !mandatorySchedule.equals(optionalSchedule)){
-        query= canOptionalAttend(query, optionalSchedule);
+    ArrayList<TimeRange> busy= getBusy(mandatorySchedule);
+    ArrayList<TimeRange> query= getNotBusy(busy, duration);
+    if(query.size() > 1 && optionalSchedule != null){
+        query = canOptionalAttend(query, optionalSchedule);
     }
 
     return query;
   }
 
-  // Seperates already scheduled events that have requested mandatory attendees from the rest of the scheduled events //
-  public ArrayList<Event> seperateMandatorySchedule(ArrayList<Event> schedule, HashSet<String> mandatoryAttendees){
+  private ArrayList<Event> getMandatorySchedule(Collection<Event> events, Collection<String> attendees){
       ArrayList<Event> mandatorySchedule= new ArrayList<>();
 
-      for(int i= 0; i < schedule.size(); i++){
-          Event event= schedule.get(i);
-          if(containsMandatoryAttendees(event, mandatoryAttendees)){
+      for(Event event: events){
+          if(hasMandatoryAttendees(event, attendees)){
               mandatorySchedule.add(event);
-              schedule.remove(event);
-              i--;
           }
       }
+
       return mandatorySchedule;
   }
 
-  // Checks if scheduled event has any requested required attendees //
-  public boolean containsMandatoryAttendees(Event event, HashSet<String> mandatoryAttendees){    
-      for(String attendee: event.getAttendees()){
-          if(mandatoryAttendees.contains(attendee)){
-              return true;
+  private ArrayList<Event> getOptionalSchedule(Collection<Event> events, Collection<String> optionalAttendees){
+      ArrayList<Event> optionalSchedule= new ArrayList<>();
+
+      for(Event event: events){
+          if(hasOptionalAttendees(event, optionalAttendees)){
+              optionalSchedule.add(event);
           }
       }
-      return false;
+
+      return optionalSchedule;
+  }
+
+  private boolean hasMandatoryAttendees(Event event, Collection<String> attendees){
+      return Collections.disjoint(event.getAttendees(), attendees) ? false : true;    
+  }
+
+  private boolean hasOptionalAttendees(Event event, Collection<String> optionalAttendees){
+      return Collections.disjoint(event.getAttendees(), optionalAttendees) ? false : true;
   }
 
   // Returns an array list of time ranges which no meeting can be held //
-  public ArrayList<TimeRange> busy(ArrayList<Event> mandatorySchedule){
+  private ArrayList<TimeRange> getBusy(ArrayList<Event> mandatorySchedule){
       ArrayList<TimeRange> busy= new ArrayList<>();
 
       for(int i= 0; i < mandatorySchedule.size(); i++){
@@ -111,40 +113,36 @@ public final class FindMeetingQuery {
   }
   
   // Inverses the array of 'busy' time ranges and return time ranges that mandatory attendees can attend //
-  public ArrayList<TimeRange> notBusy(ArrayList<TimeRange> busy){
+  private ArrayList<TimeRange> getNotBusy(ArrayList<TimeRange> busy, long duration){
       ArrayList<TimeRange> notBusy= new ArrayList<>();
-      int start= 0;
-      int END_OF_DAY= 1440;
+
+      int start = 0;
+      int end = 0;
+      int length = 0;
 
       for(TimeRange when: busy){
-          int end= when.start();
-          if(end - start > 0){
-              notBusy.add(TimeRange.fromStartDuration(start, end - start));
+          end = when.start();
+          length = end - start;
+          if(end - start >= duration){
+              notBusy.add(TimeRange.fromStartDuration(start, length));
           }
-          start= when.end();
+          start = when.end();
       }
-      if(END_OF_DAY - start > 0){
-          notBusy.add(TimeRange.fromStartDuration(start, END_OF_DAY - start));
+
+      end = TimeRange.END_OF_DAY + 1;
+      length = end - start;
+
+      if(length >= duration){
+          notBusy.add(TimeRange.fromStartDuration(start, length));
       }
       return notBusy;
   }
 
-  // Constrains the query to potential time ranges that meet requested durations //
-  public ArrayList<TimeRange> checkDuration(ArrayList<TimeRange> notBusy, long duration){
-      ArrayList<TimeRange> longEnough= new ArrayList<>();
-
-      for(TimeRange when: notBusy){
-          if(when.duration() >= duration){
-              longEnough.add(when);
-          }
-      }
-      return longEnough;
-  } 
-
   // If the query can be constrained to include time ranges that allow optional attendees to attend too then that 
   // query will be returned instead
-  public ArrayList<TimeRange> canOptionalAttend(ArrayList<TimeRange> query, ArrayList<Event> optionalSchedule){
+  private ArrayList<TimeRange> canOptionalAttend(ArrayList<TimeRange> query, ArrayList<Event> optionalSchedule){
       ArrayList<TimeRange> tmpQuery= new ArrayList<>();
+
       boolean noConflicts= true;
 
       for(TimeRange when: query){
