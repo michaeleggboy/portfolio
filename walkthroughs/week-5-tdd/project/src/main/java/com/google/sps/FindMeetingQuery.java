@@ -36,21 +36,19 @@ public final class FindMeetingQuery {
     Collection<String> optionalAttendees = request.getOptionalAttendees();
 
     // if there are no mandatory attendees then optional attendees can be treated as mandatory 
-    ArrayList<Event> mandatorySchedule = attendees.size() == 0 ? getOptionalSchedule(events, optionalAttendees) : 
+    ArrayList<TimeRange> mandatorySchedule = attendees.size() == 0 ? getOptionalSchedule(events, optionalAttendees) : 
         getMandatorySchedule(events, attendees);
-    ArrayList<Event> optionalSchedule = attendees.size() == 0 || optionalAttendees.size() == 0 
+    ArrayList<TimeRange> optionalSchedule = attendees.size() == 0 || optionalAttendees.size() == 0 
         ? null : getOptionalSchedule(events, optionalAttendees);
-
-    ArrayList<TimeRange> busy= getBusy(mandatorySchedule);
-    ArrayList<TimeRange> query= getNotBusy(busy, duration);
-
+    
     // if there is potential to invite all optional attendees too, check and return that contrained
     // query instead
+    ArrayList<TimeRange> query = getNotBusy(getBusy(mandatorySchedule), duration);
     return query.size() > 1 && optionalSchedule != null ? getOptionalQuery(query, optionalSchedule) : query;
   }
 
-  // Seperates already scheduled events that have requested mandatory attendees from the rest of the scheduled events //
-  private ArrayList<Event> getMandatorySchedule(Collection<Event> events, Collection<String> attendees){
+  // Returns time ranges where mandatory attendees already have a scheduled event
+  private ArrayList<TimeRange> getMandatorySchedule(Collection<Event> events, Collection<String> attendees){
       ArrayList<Event> mandatorySchedule= new ArrayList<>();
 
       for(Event event: events){
@@ -58,11 +56,11 @@ public final class FindMeetingQuery {
               mandatorySchedule.add(event);
           }
       }
-      return mandatorySchedule;
+      return getTimeRanges(mandatorySchedule);
   }
 
-  // Seperates already scheduled events that have optional attendees from the rest of the scheduled events //
-  private ArrayList<Event> getOptionalSchedule(Collection<Event> events, Collection<String> optionalAttendees){
+  // Returns time ranges where optional attendees already have a scheduled event
+  private ArrayList<TimeRange> getOptionalSchedule(Collection<Event> events, Collection<String> optionalAttendees){
       ArrayList<Event> optionalSchedule= new ArrayList<>();
 
       for(Event event: events){
@@ -70,7 +68,7 @@ public final class FindMeetingQuery {
               optionalSchedule.add(event);
           }
       }
-      return optionalSchedule;
+      return getTimeRanges(optionalSchedule);
   }
 
   // Checks if scheduled event has any requested required attendees //
@@ -83,39 +81,86 @@ public final class FindMeetingQuery {
       return Collections.disjoint(event.getAttendees(), optionalAttendees) ? false : true;
   }
 
-  // Returns an array list of time ranges which no meeting can be held //
-  private ArrayList<TimeRange> getBusy(ArrayList<Event> mandatorySchedule){
-      ArrayList<TimeRange> busy= new ArrayList<>();
+  // Returns time ranges when events are being held //
+  private ArrayList<TimeRange> getTimeRanges(ArrayList<Event> schedule){
+      ArrayList<TimeRange> timeRanges = new ArrayList<>();
 
-      for(int i = 0; i < mandatorySchedule.size(); i++){
-        Event i_event = mandatorySchedule.get(i);
-        TimeRange i_when = i_event.getWhen();
-        int i_start = i_when.start();
-        int i_end = i_when.end();
-        for(int j = i + 1; j < mandatorySchedule.size(); j++){
-            Event j_event = mandatorySchedule.get(j);
-            TimeRange j_when = j_event.getWhen();
-            int j_start = j_when.start();
-            int j_end = j_when.end();
-             if(i_when.overlaps(j_when)){
-                if(j_start < i_start){
-                    i_start= j_start;
-                }
-                if(j_end > i_end){
-                    i_end= j_end;
-                }
-                mandatorySchedule.remove(j_event);
-                j--;
-            }
-        }
-        int i_length = i_end - i_start;
-        busy.add(TimeRange.fromStartDuration(i_start, i_length));
-    }
-    return busy;
+      for(Event event: schedule){
+          timeRanges.add(event.getWhen());
+      }
+      Collections.sort(timeRanges, TimeRange.ORDER_BY_START);
+      return timeRanges; 
   }
+
+  // Returns time ranges when no meetings can be held //
+  private ArrayList<TimeRange> getBusy(ArrayList<TimeRange> schedule){
+      ArrayList<TimeRange> busy = new ArrayList<>();
+      
+      if(schedule.size() == 0){
+          return busy;
+      }
+
+      if(schedule.size() == 1) {
+          busy.add(TimeRange.fromStartDuration(schedule.get(0).start(), schedule.get(0).duration()));
+          return busy;
+      }
+
+      int i = 0;
+      int j = 1;
+      
+      TimeRange i_when = schedule.get(i);
+      TimeRange j_when = schedule.get(j);
+
+      int start = i_when.start();
+      int end = i_when.end(); 
+      int duration = i_when.duration();
+
+      while(i < schedule.size() && j < schedule.size()){
+          i_when = schedule.get(i);
+          j_when = schedule.get(j);
+                
+          int j_end = j_when.end();
+
+          boolean overlap = i_when.overlaps(j_when);
+
+          if(overlap && j_end > end){
+              end = j_end;
+              duration = end - start;
+              schedule.remove(j_when);
+              j--;
+          }else if(overlap) {
+              schedule.remove(j_when);
+              j--;
+          }else{
+              busy.add(TimeRange.fromStartDuration(start, duration));
+              start = j_when.start();
+              end = j_end;
+              duration = j_when.duration();
+              i++;
+          }
+          j++;
+      }
+
+      int size = schedule.size();
+
+      if(size == 1){
+       busy.add(TimeRange.fromStartDuration(start, duration));
+      }
+
+      int lastIndexSchedule = size - 1;
+      int lastIndexBusy = busy.size() - 1;
+
+      if(!busy.get(lastIndexBusy).overlaps(schedule.get(lastIndexSchedule))){
+          busy.add(TimeRange.fromStartDuration(schedule.get(lastIndexSchedule).start(), 
+          schedule.get(lastIndexSchedule).duration()));
+      }
+
+      return busy;
+  }
+      
   
-  // Inverses the array of 'busy' time ranges and return time ranges that mandatory attendees can attend
-  // that meet duration request
+  // Inverses the array list of 'busy' time ranges and return time ranges that mandatory attendees //
+  // can attend that meet duration request //
   private ArrayList<TimeRange> getNotBusy(ArrayList<TimeRange> busy, long duration){
       ArrayList<TimeRange> notBusy= new ArrayList<>();
 
@@ -126,7 +171,7 @@ public final class FindMeetingQuery {
       for(TimeRange when: busy){
           end = when.start();
           length = end - start;
-          if(end - start >= duration){
+          if(length >= duration){
               notBusy.add(TimeRange.fromStartDuration(start, length));
           }
           start = when.end();
@@ -141,28 +186,21 @@ public final class FindMeetingQuery {
       return notBusy;
   }
 
-  // If the query can be constrained to include time ranges that allow optional attendees to attend too then that 
-  // query will be returned instead
-  private ArrayList<TimeRange> getOptionalQuery(ArrayList<TimeRange> query, ArrayList<Event> optionalSchedule){
-      ArrayList<TimeRange> tmpQuery= new ArrayList<>();
+  // If the query can be constrained to include time ranges that allow optional attendees to attend too 
+  // then that query will be returned instead
+  private ArrayList<TimeRange> getOptionalQuery(ArrayList<TimeRange> query, ArrayList<TimeRange> optionalSchedule){
+      ArrayList<TimeRange> tmpQuery = getCopyOfTimeRanges(query);
+      tmpQuery.removeAll(optionalSchedule);
+      return tmpQuery.size() > 0 ? tmpQuery: query;
+  }
 
-      boolean noConflicts= true;
+  // Returns a copy of array list of time ranges // 
+  private ArrayList<TimeRange> getCopyOfTimeRanges(ArrayList<TimeRange> orginal){
+      ArrayList<TimeRange> copy = new ArrayList<>();
 
-      for(TimeRange when: query){
-          for(Event event: optionalSchedule){
-              if(when.overlaps(event.getWhen())){
-                  noConflicts = false;
-              }
-          }
-          if(noConflicts){
-              tmpQuery.add(when);
-          }
-          noConflicts = true;
+      for(TimeRange when: orginal){
+          copy.add(when);
       }
-      
-      if(tmpQuery.size() > 0){
-          return tmpQuery;
-      }
-      return query;
+      return copy;
   }
 }
