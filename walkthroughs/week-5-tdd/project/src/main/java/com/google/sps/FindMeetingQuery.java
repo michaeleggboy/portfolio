@@ -38,8 +38,8 @@ public final class FindMeetingQuery {
     // if there are no mandatory attendees then optional attendees can be treated as mandatory 
     ArrayList<TimeRange> mandatorySchedule = attendees.size() == 0 ? getOptionalSchedule(events, optionalAttendees) : 
         getMandatorySchedule(events, attendees);
-    ArrayList<TimeRange> optionalSchedule = attendees.size() == 0 || optionalAttendees.size() == 0 
-        ? null : getOptionalSchedule(events, optionalAttendees);
+    ArrayList<TimeRange> optionalSchedule = attendees.size() == 0 || optionalAttendees.size() == 0 ? null : 
+        getOptionalSchedule(events, optionalAttendees);
     
     // if there is potential to invite all optional attendees too, check and return that contrained
     // query instead
@@ -191,19 +191,19 @@ public final class FindMeetingQuery {
   private ArrayList<TimeRange> getOptionalQuery(ArrayList<TimeRange> query, ArrayList<TimeRange> optionalSchedule){
       ArrayList<TimeRange> tmpQuery= new ArrayList<>();
 
-      int index;
+      int optionalScheduleIndex;
       int optionalScheduleSize = optionalSchedule.size();
       boolean noConflict = true;
       TimeRange time;
 
       for(TimeRange when: query){
-          index = 0;
-          while(noConflict && index < optionalScheduleSize){
-              time = optionalSchedule.get(index);
+          optionalScheduleIndex = 0;
+          while(noConflict && optionalScheduleIndex < optionalScheduleSize){
+              time = optionalSchedule.get(optionalScheduleIndex);
               if(when.overlaps(time)){
                   noConflict = false;
               }
-              index++;
+              optionalScheduleIndex++;
           }
           if(noConflict){
               tmpQuery.add(when);
