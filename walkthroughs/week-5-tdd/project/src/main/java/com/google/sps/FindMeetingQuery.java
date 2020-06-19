@@ -81,7 +81,7 @@ public final class FindMeetingQuery {
       return Collections.disjoint(event.getAttendees(), optionalAttendees) ? false : true;
   }
 
-  // Returns time ranges when events are being held //
+  // Returns sorted time ranges when events are being held //
   private ArrayList<TimeRange> getTimeRanges(ArrayList<Event> schedule){
       ArrayList<TimeRange> timeRanges = new ArrayList<>();
 
@@ -186,21 +186,30 @@ public final class FindMeetingQuery {
       return notBusy;
   }
 
-  // If the query can be constrained to include time ranges that allow optional attendees to attend too 
-  // then that query will be returned instead
+  // If the query can be constrained to include time ranges that allow optional attendees to attend too // 
+  // then that query will be returned instead //
   private ArrayList<TimeRange> getOptionalQuery(ArrayList<TimeRange> query, ArrayList<TimeRange> optionalSchedule){
-      ArrayList<TimeRange> tmpQuery = getCopyOfTimeRanges(query);
-      tmpQuery.removeAll(optionalSchedule);
-      return tmpQuery.size() > 0 ? tmpQuery: query;
-  }
+      ArrayList<TimeRange> tmpQuery= new ArrayList<>();
 
-  // Returns a copy of array list of time ranges // 
-  private ArrayList<TimeRange> getCopyOfTimeRanges(ArrayList<TimeRange> orginal){
-      ArrayList<TimeRange> copy = new ArrayList<>();
+      int index;
+      int optionalScheduleSize = optionalSchedule.size();
+      boolean noConflict = true;
+      TimeRange time;
 
-      for(TimeRange when: orginal){
-          copy.add(when);
+      for(TimeRange when: query){
+          index = 0;
+          while(noConflict && index < optionalScheduleSize){
+              time = optionalSchedule.get(index);
+              if(when.overlaps(time)){
+                  noConflict = false;
+              }
+              index++;
+          }
+          if(noConflict){
+              tmpQuery.add(when);
+          }
+          noConflict = true;
       }
-      return copy;
-  }
+      return tmpQuery.size() > 0 ? tmpQuery : query;
+  }  
 }
